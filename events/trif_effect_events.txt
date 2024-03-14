@@ -1,0 +1,49 @@
+namespace = trif_effect
+
+event = {
+    id = trif_effect.1
+    hide_window = yes
+    is_triggered_only = yes
+    immediate = { 
+        every_playable_country = {
+            limit = {
+                is_ai = no
+            }
+            country_event = { id = trif_effect.2 }
+        }
+    }
+}
+
+country_event = {
+    id = trif_effect.2
+    hide_window = yes
+    is_triggered_only = yes
+
+    immediate = {
+        every_owned_planet = {
+            limit = {
+                any_owned_pop = { is_robot_pop = yes }
+                has_building = empty_clones_vet
+                NOT = { has_planet_flag = cloning_of_empty_clone_in_progress }
+            }
+            random_owned_pop = {
+                limit = { is_robot_pop = yes }
+                kill_pop = yes
+            }
+            create_pop = {
+                species = owner_main_species
+            }
+            set_planet_flag = cloning_of_empty_clone_in_progress 
+            planet_event = { id = trif_effect.3 days = 170 random = 20 }
+        }
+    }
+}
+
+planet_event = {
+    id = trif_effect.3
+    hide_window = yes
+    is_triggered_only = yes
+    immediate = {
+        remove_planet_flag = cloning_of_empty_clone_in_progress
+    }
+}
